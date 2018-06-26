@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        sh 'echo "no external builds neccesary"'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'docker-compose -f Unit_Testing/docker-compose.unit-testing.yaml up'
+      }
+    }
+    stage('Tear down') {
+      steps {
+        sh 'docker-compose -f Unit_Testing/docker-compose.unit-testing.yaml down'
+      }
+    }
+  }
+  post {
+        failure {
+            sh 'docker-compose -f Unit_Testing/docker-compose.unit-testing.yaml down --remove-orphans'
+        }
+    }
+}

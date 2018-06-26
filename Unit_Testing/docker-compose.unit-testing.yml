@@ -1,0 +1,9 @@
+version: '3'
+services:
+  unit_testing:
+    build:
+      context: ./Installation
+      dockerfile: Dockerfile
+    environment:
+      - EXECUTION_ENV=Testing
+    command: "python test_sample.py"
